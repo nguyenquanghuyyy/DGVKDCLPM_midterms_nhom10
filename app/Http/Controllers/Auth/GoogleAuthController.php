@@ -18,10 +18,10 @@ class GoogleAuthController extends Controller
     {
         $clientId = config('services.google.client_id');
 
-        if (!$clientId) {
+        if (!$clientId || !config('services.google.client_secret')) {
             return redirect()
                 ->route('login')
-                ->with('error', 'Chưa cấu hình GOOGLE_CLIENT_ID cho đăng nhập Google.');
+                ->with('error', 'Chưa cấu hình GOOGLE_CLIENT_ID và GOOGLE_CLIENT_SECRET cho đăng nhập Google.');
         }
 
         $state = Str::random(40);

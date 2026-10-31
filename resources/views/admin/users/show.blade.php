@@ -66,6 +66,29 @@
 
         <div class="tm-form-card">
             <div class="tm-eyebrow"><i class="bi bi-shield-exclamation"></i> Thao tác tài khoản</div>
+            @if($user->id !== auth()->id())
+                <form method="POST" action="{{ route('admin.users.role.update', $user) }}" class="mb-3">
+                    @csrf
+                    @method('PATCH')
+                    <div class="tm-field mb-3">
+                        <label for="role">Vai trò tài khoản</label>
+                        <select id="role" name="role" class="form-select">
+                            <option value="customer" @selected(old('role', $user->role) === 'customer')>Customer</option>
+                            <option value="owner" @selected(old('role', $user->role) === 'owner')>Owner</option>
+                            <option value="admin" @selected(old('role', $user->role) === 'admin')>Admin</option>
+                        </select>
+                        @error('role')
+                            <div class="text-danger small mt-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <button class="btn tm-btn-primary w-100" type="submit">
+                        <i class="bi bi-person-gear me-1"></i> Cập nhật vai trò
+                    </button>
+                </form>
+            @else
+                <p class="text-muted small mb-3">Bạn không thể tự thay đổi vai trò của mình.</p>
+            @endif
+
             @if($user->status === 'active')
                 <a href="{{ route('admin.users.lock.confirm', $user) }}" class="btn btn-outline-danger w-100">
                     <i class="bi bi-lock me-1"></i> Khóa tài khoản

@@ -23,6 +23,9 @@ Route::middleware(['auth', 'active', 'role:admin'])
         Route::get('/users/{user}', [UserController::class, 'show'])
             ->name('users.show');
 
+        Route::patch('/users/{user}/role', [UserController::class, 'updateRole'])
+            ->name('users.role.update');
+
         Route::get('/users/{user}/lock', [UserController::class, 'confirmLock'])
             ->name('users.lock.confirm');
 

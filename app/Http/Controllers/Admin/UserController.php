@@ -44,6 +44,47 @@ class UserController extends Controller
         return view('admin.users.show', compact('user'));
     }
 
+    public function updateRole(Request $request, User $user)
+    {
+        if ($user->id === auth()->id()) {
+            return back()->with('error', 'Bạn không thể tự thay đổi vai trò của mình.');
+        }
+
+        $data = $request->validate([
+            'role' => ['required', 'in:admin,owner,customer'],
+        ], [
+            'role.required' => 'Vui lòng chọn vai trò.',
+            'role.in' => 'Vai trò được chọn không hợp lệ.',
+        ]);
+
+        $previousRole = $user->role;
+
+        if ($previousRole === $data['role']) {
+            return redirect()
+                ->route('admin.users.show', $user)
+                ->with('success', 'Vai trò tài khoản không thay đổi.');
+        }
+
+        $user->update(['role' => $data['role']]);
+
+        SystemLogService::write(
+            'update_user_role',
+            'users',
+            User::class,
+            $user->id,
+            'Admin thay đổi vai trò tài khoản người dùng.',
+            [
+                'email' => $user->email,
+                'previous_role' => $previousRole,
+                'new_role' => $data['role'],
+            ]
+        );
+
+        return redirect()
+            ->route('admin.users.show', $user)
+            ->with('success', 'Cập nhật vai trò tài khoản thành công.');
+    }
+
     public function lock(Request $request, User $user)
     {
         if ($user->id === auth()->id()) {

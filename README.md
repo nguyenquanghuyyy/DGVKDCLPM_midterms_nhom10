@@ -8,6 +8,8 @@
 
 Travel Mate là website đặt phòng khách sạn trực tuyến kết nối khách hàng với chủ cơ sở lưu trú và quản trị viên. Hệ thống hỗ trợ tìm kiếm khách sạn, đặt phòng, thanh toán, quản lý lưu trú, đánh giá và quản lý doanh thu.
 
+video thuyết trình dự án được đặt trong folder VIDEO_THUYET_TRINH
+
 ---
 
 ## Mục tiêu kiểm định
@@ -160,6 +162,25 @@ Truy cập:
 ```text
 http://127.0.0.1:8000
 ```
+
+### Đăng nhập Google và gửi email
+
+Ứng dụng dùng Google OAuth với callback:
+
+```text
+http://127.0.0.1:8000/auth/google/callback
+```
+
+Tạo OAuth Client ID loại **Web application** trong Google Cloud Console, thêm URL trên vào **Authorized redirect URIs**, sau đó đặt `GOOGLE_CLIENT_ID` và `GOOGLE_CLIENT_SECRET` trong `.env`. Nếu ứng dụng OAuth đang ở chế độ kiểm thử, thêm tài khoản Google đăng nhập vào danh sách **Test users**. Không commit các giá trị secret.
+
+Để gửi email thật bằng Gmail:
+
+1. Bật xác minh 2 bước cho tài khoản Gmail và tạo **App Password**. Không dùng mật khẩu đăng nhập Gmail thông thường.
+2. Trong `.env`, đặt `MAIL_MAILER=smtp`, `MAIL_SCHEME=smtp`, `MAIL_HOST=smtp.gmail.com`, `MAIL_PORT=587`.
+3. Đặt `MAIL_USERNAME` là địa chỉ Gmail, `MAIL_PASSWORD` là App Password và `MAIL_FROM_ADDRESS` bằng địa chỉ Gmail đó.
+4. Chạy `php artisan config:clear` sau khi sửa `.env`.
+
+Mặc định Laravel dùng mailer `log`; khi đó email chỉ được ghi vào log, không gửi đến hộp thư. Luồng quên mật khẩu dùng email đặt lại mật khẩu của Laravel; email xác nhận đặt phòng được gửi sau khi thanh toán thành công. Email hủy đơn và lời mời đánh giá cũng đã được nối vào các luồng nghiệp vụ tương ứng.
 
 ---
 

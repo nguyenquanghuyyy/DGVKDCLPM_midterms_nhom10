@@ -1,0 +1,15 @@
+$kind: http-request
+url: http://127.0.0.1:8000/ai/chat
+method: POST
+headers:
+  Accept: application/json
+  Content-Type: application/json
+  X-CSRF-TOKEN: gbCnzd87hZMkb2W32jREf1PseX9eiYwAEQfeueg4
+body:
+  type: json
+  content: "{\r
+
+    \  \"message\": \"Tôi muốn tìm khách sạn ở Đà Lạt\"\r
+
+    }"
+order: 2000

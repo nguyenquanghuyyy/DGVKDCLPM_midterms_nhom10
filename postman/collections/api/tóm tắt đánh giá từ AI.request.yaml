@@ -1,0 +1,11 @@
+$kind: http-request
+url: http://127.0.0.1:8000/ai/hotels/{hotel_id}/review-summary/refresh
+method: POST
+headers:
+  X-CSRF-TOKEN: gbCnzd87hZMkb2W32jREf1PseX9eiYwAEQfeueg4
+queryParams:
+  - key: ""
+    value: ""
+    disabled: true
+    description: ""
+order: 3000

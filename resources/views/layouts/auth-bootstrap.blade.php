@@ -53,6 +53,12 @@
                 </div>
             @endif
 
+            @if (session('error'))
+                <div class="alert alert-danger">
+                    <i class="bi bi-exclamation-triangle me-2"></i>{{ session('error') }}
+                </div>
+            @endif
+
             @yield('content')
         </div>
     </section>

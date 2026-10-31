@@ -1,0 +1,8 @@
+$kind: http-request
+url: http://127.0.0.1:8000/ai/room-types/1/recommendations?checkin_date=2026-11-10&checkout_date=2026-11-12&guests=2
+method: GET
+queryParams:
+  checkin_date: 2026-11-10
+  checkout_date: 2026-11-12
+  guests: "2"
+order: 1000

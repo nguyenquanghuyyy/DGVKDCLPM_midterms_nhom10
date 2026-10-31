@@ -76,7 +76,8 @@ class BookingHistoryController extends Controller
         DB::transaction(function () use ($booking, $data, &$resultMessage) {
             $booking->load(['payment', 'financialTransaction', 'hotel.owner']);
 
-            $cancelReason = $data['cancel_reason'] ?: 'Khách hàng hủy đơn.';
+            $cancelReason = $data['cancel_reason'] ?? null;
+            $cancelReason = $cancelReason ?: 'Khách hàng hủy đơn.';
             $isPaid = $booking->payment && $booking->payment->status === 'paid';
 
             $booking->update([
